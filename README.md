@@ -1,6 +1,6 @@
 # n8n-nodes-airouter
 
-This is an n8n community node that provides AI-powered routing capabilities. It automatically analyzes content and routes workflow execution based on the analysis, supporting both AI-based and keyword-based routing strategies.
+This is an n8n node that provides AI-powered routing capabilities. It automatically analyzes content and routes workflow execution based on the analysis, supporting both AI-based and keyword-based routing strategies.
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
