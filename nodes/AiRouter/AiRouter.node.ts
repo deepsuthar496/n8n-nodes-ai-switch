@@ -36,8 +36,8 @@ export class AiRouter implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'AI Router',
 		name: 'aiRouter',
-		icon: 'file:AiRouter.svg',
 		group: ['routing'],
+		icon: 'fa:random',
 		version: 1,
 		description: 'Automatically routes workflow based on AI analysis',
 		defaults: {
@@ -587,26 +587,24 @@ export class AiRouter implements INodeType {
 					// For default route, pass through the original item
 					returnData[routeIndex].push(item);
 				} else {
-					// For custom routes, we need to EXACTLY match the default route's behavior
-					// The key is to pass the item through with minimal modification
-					const routeItem = item; // Use the exact same item
+					// For custom routes, create a new item with the EXACT SAME structure as the original
+					// This is critical for n8n chat display compatibility
 					
-					// Only add the routing metadata
-					if (!routeItem.json.aiRouterInfo) {
-						routeItem.json = {
-							...routeItem.json,
-							aiRouterInfo: {
-								routeName: routes[routeIndex - 1].name,
-								routeIndex,
-								reasoning,
-							},
-						};
-					}
+					// Create a deep clone of the item
+					const routeItem = JSON.parse(JSON.stringify(item));
+					
+					// Just add routing metadata, preserving all original structure
+					(routeItem.json as any).aiRouterInfo = {
+						routeName: routes[routeIndex - 1].name,
+						routeIndex,
+						reasoning,
+					};
+					
+					// Add pairedItem information for proper workflow tracking
+					routeItem.pairedItem = { item: itemIndex };
 					
 					if (debugMode) {
-						this.logger.info(`Routing item to ${routes[routeIndex - 1].name}`);
-						this.logger.info(`Item structure: ${JSON.stringify(Object.keys(routeItem.json))}`);
-						this.logger.info(`Output content: ${routeItem.json.output}`);
+						this.logger.info(`Routing item to ${routes[routeIndex - 1].name} with output: ${typeof routeItem.json.output === 'string' ? routeItem.json.output.substring(0, 30) : JSON.stringify(routeItem.json.output).substring(0, 30)}...`);
 					}
 					
 					returnData[routeIndex].push(routeItem);

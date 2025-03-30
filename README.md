@@ -1,6 +1,6 @@
 # n8n-nodes-airouter
 
-This is an n8n node that provides AI-powered routing capabilities. It automatically analyzes content and routes workflow execution based on the analysis, supporting both AI-based and keyword-based routing strategies.
+This is an n8n community node that provides intelligent routing for your n8n workflows based on content analysis. The AI Router analyzes incoming messages or data using keyword matching or AI-powered content classification, then routes the flow to the appropriate output.
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
@@ -12,77 +12,99 @@ This is an n8n node that provides AI-powered routing capabilities. It automatica
 
 ## Installation
 
-Follow these steps to install this node:
+Follow these steps to install the node in your n8n instance:
 
-### Community Nodes (Recommended)
+### Local Installation (Recommended)
 
-For users on n8n v0.187+:
-
-1. Go to **Settings > Community Nodes**
-2. Select **Install**
-3. Enter `n8n-nodes-airouter` in **Enter npm package name**
-4. Agree to the [risks](https://docs.n8n.io/integrations/community-nodes/risks/) of using community nodes
-5. Select **Install**
-
-### Manual Installation
-
-To get started install the package in your n8n root directory:
-
+1. Clone this repository:
 ```bash
-# Using npm
-npm install n8n-nodes-airouter
-
-# Using pnpm
-pnpm install n8n-nodes-airouter
+git clone https://github.com/YOUR_USERNAME/n8n-nodes-airouter.git
 ```
 
-For Docker-based installations, add the following line to your `Dockerfile`:
+2. Navigate to the project directory:
+```bash
+cd n8n-nodes-airouter
+```
 
-```dockerfile
-RUN cd /usr/local/lib/node_modules/n8n && npm install n8n-nodes-airouter
+3. Install dependencies:
+```bash
+npm install
+```
+
+4. Build the node:
+```bash
+npm run build --ignore-scripts
+```
+
+5. Copy the built files to your n8n custom nodes directory:
+```bash
+# Windows (PowerShell)
+robocopy "dist" "C:\Users\YOUR_USERNAME\.n8n\custom\node_modules\n8n-nodes-airouter\dist" /E
+
+# Mac/Linux
+mkdir -p ~/.n8n/custom/node_modules/n8n-nodes-airouter/
+cp -r dist ~/.n8n/custom/node_modules/n8n-nodes-airouter/
+```
+
+6. Restart your n8n instance to load the new node.
+
+### Using n8n CLI
+
+Alternatively, you can install the node using the n8n CLI:
+
+```bash
+npm install -g n8n-nodes-airouter
+n8n-node-dev build
 ```
 
 ## Operations
 
-The AI Router node supports the following operations:
+The AI Router offers several powerful routing capabilities:
 
-- **AI-Based Routing**: Automatically analyzes content using AI models and routes based on the analysis
-- **Keyword-Based Routing**: Falls back to keyword matching when AI analysis is not available
-- **Debug Mode**: Provides detailed logging of the routing process
-- **Custom Routes**: Supports multiple custom routing paths with descriptions
-- **Default Route**: Handles cases when no matching route is found
+- **Keyword-Based Routing**: Route based on keyword matching in the content
+- **AI-Powered Classification**: Use AI language models to intelligently classify content
+- **Fallback Routing**: Default route if no match is found
+- **Multiple Output Paths**: Route to up to 3 different paths based on your routing rules
+- **Debug Mode**: Detailed logging to understand routing decisions
 
 ## Compatibility
 
-This node has been tested with n8n version 1.0+ and should work with any newer version. It requires Node.js version 18.10.0 or newer.
+This node has been developed and tested with n8n versions 1.0.0 and later.
+
+- Supports AI Agent outputs
+- Works with Chat Message triggers
+- Compatible with n8n's Language Models and external LLMs
 
 ## Usage
 
-1. Add the AI Router node to your workflow
-2. Configure the Analysis Field (e.g., 'message', 'content', etc.)
-3. Add custom routes with descriptions
-4. (Optional) Enable Debug Mode for detailed logging
-5. Connect the node to your workflow paths
+1. **Add the AI Router node** to your workflow between your input node and the branching paths
+2. **Connect both inputs**:
+   - Main Input: Connect your trigger or data source
+   - LM Input: Connect your AI language model (optional)
+3. **Configure Analysis Field**:
+   - Specify which field contains the content to analyze (e.g., `message`, `content`, `text`)
+   - Leave empty to auto-detect common field names
+4. **Define Routes**:
+   - Add up to 3 routes with clear names and descriptions
+   - For each route, provide a detailed description of when content should follow that path
+5. **Enable Debug Mode** during testing to see detailed routing decisions
 
 ### Example Workflow
 
-Here's a basic example of using the AI Router node:
+A common use case is routing customer inquiries:
 
-1. Chat Trigger node → AI Router node
-2. Configure AI Router:
-   - Set Analysis Field to "message"
-   - Add routes:
-     - "Fruit" → "Handle fruit-related queries"
-     - "Weather" → "Handle weather-related queries"
-   - Set default route for unmatched content
-
-The node will automatically analyze incoming messages and route them to the appropriate path based on content analysis.
+1. When a chat message is received
+2. AI Router analyzes the content
+3. Routes to different departments based on the message content:
+   - Technical support
+   - Billing inquiries
+   - General information
 
 ## Resources
 
-* [n8n community nodes documentation](https://docs.n8n.io/integrations/community-nodes/)
+* [n8n Community Nodes Documentation](https://docs.n8n.io/integrations/community-nodes/)
 * [Example workflows](https://n8n.io/workflows)
 
 ## License
 
-[MIT](LICENSE.md)
+[MIT](https://github.com/n8n-io/n8n/blob/master/packages/nodes-base/LICENSE.md)
