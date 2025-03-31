@@ -37,7 +37,7 @@ export class AiSwitch implements INodeType {
 		displayName: 'AI Switch',
 		name: 'aiSwitch',
 		group: ['routing'],
-		icon: 'fa:random',
+		icon: 'file:AiSwitch.svg',
 		version: 1,
 		description: 'Automatically routes workflow based on AI analysis',
 		defaults: {
