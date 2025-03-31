@@ -32,16 +32,16 @@ const configuredOutputs = (parameters: INodeParameters) => {
 	return outputsList;
 };
 
-export class AiRouter implements INodeType {
+export class AiSwitch implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'AI Router',
-		name: 'aiRouter',
+		displayName: 'AI Switch',
+		name: 'aiSwitch',
 		group: ['routing'],
 		icon: 'fa:random',
 		version: 1,
 		description: 'Automatically routes workflow based on AI analysis',
 		defaults: {
-			name: 'AI Router',
+			name: 'AI Switch',
 			color: '#00AAFF',
 		},
 		inputs: [
@@ -149,7 +149,7 @@ export class AiRouter implements INodeType {
 			.map(() => []);
 
 		if (debugMode) {
-			this.logger.info(`AI Router processing ${items.length} items with ${routes.length} routes`);
+			this.logger.info(`AI Switch processing ${items.length} items with ${routes.length} routes`);
 		}
 
 		// Process each item
