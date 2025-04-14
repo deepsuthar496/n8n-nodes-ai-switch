@@ -6,7 +6,12 @@ This is an n8n node that provides intelligent routing for your n8n workflows bas
 
 Follow these steps to install the node in your n8n instance:
 
-### Local Installation (Recommended)
+### Using NPM ( easiest )
+
+```
+npm i n8n-nodes-ai-switch
+```
+### Local Installation
 
 1. Clone this repository:
 ```bash
